@@ -1,4 +1,4 @@
-//onject
+//object
 const obj = {
   name: "Prabesh",
   age: 30,
@@ -17,7 +17,11 @@ obj.salary = 50000; //adding new key-value pair
 console.log(obj);
 //it show the updated object with new key-value pair
 obj.age = 31; //updating existing value
-console.log(obj);
+console.log(obj);//output: { name: 'Prabesh', age: 31, city: 'Beldiha', phone: '123-456-7890', salary: 50000 }
+//it show the updated object with updated age value
+delete obj.phone; //deleting key-value pair
+console.log(obj);//output: { name: 'Prabesh', age: 31, city: 'Beldiha', salary: 50000 }
+//it show the updated object with deleted phone key-value pair
 
 
 //CURD operations on object
@@ -65,7 +69,7 @@ const {name: personName, age: personAge} = person;
 console.log(`Name: ${personName}, Age: ${personAge}`);//output: Name: RAM, Age: 25
 //it show the name and age of the person object using destructuring. This is the recommended way to extract values from an object.
 
-//we can do siilar destructuring in array as well.
+//we can do similar destructuring in array as well.
 const arr = [1, 2, 3];
 const [first, second, third] = arr;
 console.log(`First: ${first}, Second: ${second}, Third: ${third}`);//output: First: 1, Second: 2, Third: 3
@@ -110,6 +114,7 @@ console.log(greeting);//output: Hello prabesh22 Welcome back.
 //it show the username of the user object and call the greeting function of the user object.
 
 user.username= "pratik"
+console.log(user.username);//output: pratik
 user.greeting();//output: Hello pratik Welcome back.
 
 const user2={
@@ -119,3 +124,49 @@ const user2={
 user2.greeting = user.greeting; //adding greeting function to user2 object
 user2.greeting();//output: Hello Alice Welcome back.
 //it show that we can add function from one object to another object and it will work as expected.
+
+//nested object
+const student = {
+    name: "prabesh",
+    age: 23,
+    address: {
+        street: "123 Main",
+        city: "Beldiha",
+    },
+    courses: ["Math", "Science", "History"],
+};
+console.log(student);
+console.log(student.address.city);//output: Beldiha
+console.log(student.courses[1]);//output: Science
+//it show the student object with nested address object and courses array.
+
+const student2 ={...student};//shallow copy of student object
+student2.name = "ram";
+student2.address.city = "New City";
+console.log(student.name);//output: prabesh
+console.log(student2.name);//output: ram
+console.log(student.address.city);//output: New City
+console.log(student2.address.city);//output: New City
+//it show that when we change the nested object in student2, it also changes in student because it is a shallow copy. only the top-level properties are copied, but nested objects are still referenced. 
+const student3= structuredClone(student);//deep copy of student object
+student3.name = "shyam";
+student3.address.city = "Old City";
+console.log(student.name);//output: prabesh
+console.log(student.address.city);//output: New City
+console.log(student3.name);//output: shyam
+console.log(student3.address.city);//output: Old City
+//it show that when we change the nested object in student3, it does not change in student because it is a deep copy. all levels of the object are copied independently. 
+
+//symbols as keys in object
+const sym1 = Symbol('id');
+const sym2 = Symbol('id');
+const user3 = {
+    name: 'Prabesh',
+    sym1:101,//this is string key not symbol key
+    [sym1]: 101,
+    [sym2]: "hii how are you?",
+};
+console.log(user3);//output: { name: 'Prabesh', sym1: 101, [Symbol(id)]: 101, [Symbol(id)]: 'hii how are you?'`` }
+console.log(user3[sym1]);//output: 101
+console.log(user3[sym2]);//output: hii how are you?
+//it show that symbols are unique and can be used as keys in object. even though sym1 and sym2 have the same description, they are different symbols.
