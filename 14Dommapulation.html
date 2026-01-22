@@ -1,0 +1,128 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="background-color: rgb(50, 211, 211); text-align: center; top:0%" id="header">hello Prabesh welcome to DOM Manipulation</h1>
+    <p style="color: blue;">this is a paragraphff</p>
+</body>
+<script>
+    let header = document.getElementById("header"); 
+    header.style.color = "red";
+    header.style.fontSize = "40px";
+    header.textContent = "Hello Prabesh, you have successfully manipulated the DOM!";
+</script>
+</html> -->
+<!-- //DOM Manipulation: The Document Object Model (DOM) is a programming interface for web documents. 
+It represents the page so that programs can change the document structure, style, and content.
+In this example, we manipulate the DOM by changing the style and text content of an HTML element using JavaScript. 
+Here it change the all data of HTML document into object and manipulate it using JavaScript.
+DOM tree structure:
+- Document
+  - html
+    - head
+      - title
+    - body
+      - h1
+      - p
+The script accesses the h1 element by its ID, modifies its color, font size, and text content.
+-->
+
+<!-- //difference between innerHTML, textContent and inner text -->
+ <!-- perfect example to understand the difference between innerHTML, textContent, and innerText in JavaScript: -->
+<!-- <!DOCTYPE html>
+<html lang="en">Text</html>
+<head>
+    <title>DOM Manipulation Example</title>
+</head>
+<body>
+    <div id="exampleDiv">
+        <h2>This is a heading</h2>
+        <p>This is a <strong>paragraph</strong> with some <em>formatted</em> text.</p>
+    </div>
+
+     <script>
+        const exampleDiv = document.getElementById('exampleDiv');
+
+        // Using innerHTML
+        console.log("Using innerHTML:");
+        console.log(exampleDiv.innerHTML);
+        // Output: <h2>This is a heading</h2><p>This is a <strong>paragraph</strong> with some <em>formatted</em> text.</p>
+
+        // Using textContent
+        console.log("Using textContent:");
+        console.log(exampleDiv.textContent);
+        // Output: This is a heading
+        //         This is a paragraph with some formatted text.
+
+        // Using innerText
+        console.log("Using innerText:");
+        console.log(exampleDiv.innerText);
+        // Output: This is a heading
+        //         This is a paragraph with some formatted text.
+        // Note: innerText may vary based on CSS styles applied to the element.
+    </script> 
+</body>
+</html>-->
+<!-- //the core differences are:
+//1. innerHTML returns the HTML content of an element as a string, including all HTML tags.
+//2. textContent returns the text content of an element and its descendants, ignoring all HTML tags.
+//3. innerText returns the visible text content of an element, taking into account CSS styles
+//the most commonly used is textContent because it is faster and safer when you only need the text without any HTML formatting. -->
+
+//dom manupulation using more examples
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class ="header">Welcome to DOM Manipulation</h1>
+    <ul class="item">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+    <ul class="item">
+        <li class="item">Item A</li>
+        <li class="item">Item B</li>
+        <li class="item">Item C</li>
+    </ul>
+    <script>
+        // Select all list items
+        const listItems = document.getElementsByTagName('li');
+        const classitems = document.getElementsByClassName('item');
+        console.log(classitems);
+
+        // Change the text color of each list item to green
+        for (let i = 0; i < listItems.length; i++) {
+            listItems[i].style.color = 'green';
+        }
+        //change items of class item
+        for (let i = 0; i < classitems.length; i++) {
+            classitems[i].style.backgroundColor = 'lightgray';
+        }
+        //queryselector
+        const firstItem = document.querySelector('li');
+        firstItem.style.fontWeight = 'bold';
+        const itembyclsss = document.querySelector('.item');//this will select the first item with class item
+        itembyclsss.style.textDecoration = 'underline';
+        //queryselectorall
+        const allItems = document.querySelectorAll('item');//this will select all items with class item
+        allItems.forEach(item => {
+            item.style.fontStyle = 'italic';
+        });
+        //different between queryselector and queryselectorall
+        //1. querySelector returns the first element that matches a specified CSS selector(s) in the document.
+        //2. querySelectorAll returns a static NodeList containing all elements that match a specified CSS selector(s) in the document.
+        //also getementbyid,getelementsbyclassname,getelementsbytagname are live collections but queryselectorall is static collection
+        //live collection means if we add or remove elements from the DOM the collection will be updated automatically
+        //static collection means if we add or remove elements from the DOM the collection will not be updated automatically
+        //example of live collection
+        
+    </script>
+</body>
+</html>
