@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color: black;">
+    <h1 style="color: white;" id="first">DOM Curd</h1>
+    <ul id="list">
+    </ul>
+
+    <ul id="secondList " style="background-color: turquoise;">
+        <li>jan</li>
+        <li>feb</li>
+        <li>mar</li>
+        <li>apr</li>
+        <li>may</li>
+        <li>jun</li>
+    </ul>
+    <p>hiii everyone</p>
+
+    <script>
+        const newElement = document.createElement('h2');
+        newElement.textContent = 'This is a new heading added using DOM Curd';
+        newElement.style.color = 'yellow';
+        newElement.id = 'second';
+
+        const element = document.getElementById('first');
+        element.after(newElement);//insert after the element
+        //element.before(newElement);//insert before the element 
+
+        const newElement2 =document.createElement('p');
+        newElement2.textContent = 'This is a new paragraph added using DOM Curd';
+        newElement2.style.color = 'red';
+        newElement2.style.fontSize = '20px';
+        newElement2.style.fontFamily = 'Arial, sans-serif';
+        newElement2.style.backgroundColor = 'cyan';
+        newElement2.id = 'para1';
+        newElement2.className = 'paraClass';
+        newElement.after(newElement2);
+        newElement2.setAttribute('title','This is a paragraph');//adding attribute to the element
+        console.log(newElement2.getAttribute('title'));//getting attribute of the element
+
+        const list1 =document.createElement('li');
+        list1.textContent = 'Item 1';
+        list1.style.color = 'lightgreen';
+
+        const list2 =document.createElement('li');
+        list2.textContent = 'Item 2';
+        list2.style.color = 'lightblue';
+
+        const list3 =document.createElement('li');
+        list3.textContent = 'Item 3';
+        list3.style.color = 'lightcoral';
+
+        const list4 =document.createElement('li');
+        list4.textContent = 'Item 4';
+        list4.style.color = 'orange';
+
+        const list5 =document.createElement('li');
+        list5.textContent = 'Item 5';
+        list5.style.color = 'pink';
+
+        const ul = document.getElementById('list');
+        ul.append(list1,list2,list3);//adding multiple items to the list
+        ul.prepend(list4);//adding item at the beginning of the list
+        ul.children[2].after(list5);//adding item after specific item in the list
+
+        //adding multiple items using loop
+        const array=['Apple','Banana','Mango','Grapes','Pineapple'];
+        const fragment = document.createDocumentFragment();
+        for (let fruit of array){
+            const li = document.createElement('li');
+            li.textContent = fruit;
+            li.style.color = 'green';
+            //ul.append(li); //this is not best for optimization so use document fragment
+            fragment.append(li);
+        }
+        ul.append(fragment);
+
+        //we can do same thing using map function
+        const fruits = ['Strawberry', 'Blueberry', 'Orange', 'Watermelon', 'Kiwi'];
+        const frag = document.createDocumentFragment();
+        fruits.map(fruit => {
+            const li = document.createElement('li');
+            li.textContent = fruit;
+            li.style.color = 'purple';
+            frag.append(li);
+        });
+        ul.append(frag);
+
+        //removing an element
+        list1.remove();//removing item1 from the list
+        ul.children[3].remove();//removing item4 from the list using children property
+        ul.removeChild(ul.children[5]);//removing item using removeChild method
+        fruits.pop();//removing last item(kiwi) from the fruits array
+
+
+        const month = document.getElementById('secondList');
+        console.log(month.children);//only element nodes,this is preferred
+        //console.log(month.childNodes);//includes text nodes as well
+
+
+    </script>
+</body>
+
+</html>
