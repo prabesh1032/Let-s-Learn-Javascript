@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: aqua; color: crimson;">
+    <!-- <h1 id="first" style="cursor: pointer;" onclick="handleclick()">Event Handling in JavaScript</h1> -->
+    <h1 id="first" style="cursor: pointer;">Event Handling in JavaScript</h1>
+    <div id="container" style="display: flex; gap: 10px; margin-top: 20px;">
+        <div id="child1" class="child" style="height: 150px; width: 150px; background-color: yellow;cursor: pointer; ">First</div>
+        <div id="child2" class="child" style="height: 100px; width: 100px; background-color: orange;cursor: pointer;">Second</div>
+        <div id="child3" class="child" style="height: 100px; width: 100px; background-color: lightgreen;cursor: pointer;">Third</div>
+        <div id="child4" class="child" style="height: 100px; width: 100px; background-color: pink;cursor: pointer;">Fourth</div>
+        <div id="child5" class="child" style="height: 100px; width: 100px; background-color: lightblue;cursor: pointer;">Fifth</div>
+    </div>
+    <div id="container2" style="display: flex; gap: 10px; margin-top: 20px;">
+        <div id="child1" class="child" style="height: 150px; width: 150px; background-color: yellow;cursor: pointer; ">First</div>
+        <div id="child2" class="child" style="height: 100px; width: 100px; background-color: orange;cursor: pointer;">Second</div>
+        <div id="child3" class="child" style="height: 100px; width: 100px; background-color: lightgreen;cursor: pointer;">Third</div>
+        <div id="child4" class="child" style="height: 100px; width: 100px; background-color: pink;cursor: pointer;">Fourth</div>
+        <div id="child5" class="child" style="height: 100px; width: 100px; background-color: lightblue;cursor: pointer;">Fifth</div>
+    </div>
+
+    <div id ="grandparent" style="margin-top: 30px; height: 300px; width: 300px; background-color: red;display: inline-flex; justify-content: center; align-items: center;">
+        <div id="parent" style="background-color: green;height: 200px; width: 200px; padding: 10px; display: flex; justify-content: center; align-items: center;">
+            <div id="child" style="background-color: blue; height: 100px; width: 100px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const heading = document.getElementById('first');
+        //heading.addEventListener('click', handleclick);
+        // heading.onclick = function handleclick(){
+        //     //alert("You clicked the heading!");
+        //     heading.style.color = 'blue'; 
+        //     heading.style.fontSize = '40px';
+        //     heading.textContent = 'You have clicked the heading!';
+        // }
+        // heading.onclick =function handleclick(){
+        //     heading.style.color = 'green'; 
+        //     heading.style.fontSize = '50px';
+        //     heading.textContent = 'You clicked me again!';
+        // }//this will override the previous onclick event so this is not recommended way
+        //we should use addEventListener method to add multiple event listeners to the same element
+        // heading.addEventListener('click', function(){
+        //     heading.style.fontSize = '60px';
+        //     heading.textContent = 'You clicked me using addEventListener!';
+        // });//this will not override the previous onclick event
+
+        // heading.addEventListener('click', function(){
+        //     heading.style.color= 'pink'
+        // });//this will add another event listener to the same element. it will combine with the previous event listener
+
+        heading.addEventListener('mouseover', function(){
+            heading.style.backgroundColor = 'black';
+        });//this will change the background color of the heading when mouse is over it
+
+        heading.addEventListener('mouseout', function(){//mouseleave and mouseout are different.mouseout will also trigger when mouse is over the child element
+            heading.style.backgroundColor = 'aqua';
+        });//this will change the background color of the heading when mouse is out of it
+
+        heading.addEventListener('dblclick', function(){
+            heading.style.fontSize = '30px';
+            heading.textContent = 'You double clicked me!';
+            heading.style.color = 'crimson';
+        });//this will change the font size and text content of the heading when it is double clicked
+
+        // const child1 = document.getElementById('child1');
+        // child1.addEventListener('click', ()=>{
+        //     child1.textContent = 'First Child Clicked';
+        //     alert('First Child Div Clicked!');
+        // });
+        // const child2 = document.getElementById('child2');
+        // child2.addEventListener('click', ()=>{
+        //     child2.textContent = 'Second Child Clicked';
+        //     alert('Second Child Div Clicked!');
+        // });
+        // const child3 = document.getElementById('child3');
+        // child3.addEventListener('click', ()=>{
+        //     child3.textContent = 'Third Child Clicked';
+        //     alert('Third Child Div Clicked!');
+        // });
+        //this is soo long way to add event listener to multiple elements we can use parent element to add event listener to all child elements
+
+        const container = document.getElementById('container');
+        console.log(container.children);//HTMLCollection of child elements
+        for (let child of container.children){
+            child.addEventListener('click', function(){
+                child.style.backgroundColor = 'white';
+                child.style.color = 'black';
+                child.textContent = `${child.textContent} Clicked`;
+            });
+        }//this will add event listener to all child elements of the container using loop
+
+        const container2 = document.getElementById('container2');
+         function handleclick(event){
+            event.target.style.backgroundColor = 'gray';
+            event.target.style.color = 'black';
+            event.target.textContent = `${event.target.textContent} Clicked`;
+            container2.removeEventListener('click', handleclick);//this will remove the event listener from the container2
+            console.log(event.target);//this will log the element that was clicked
+        };//this is event delegation where we add event listener to the parent element and handle events of child elements using event.target
+
+        container2.addEventListener('click', handleclick);
+
+
+        const grandparent = document.getElementById('grandparent');
+        grandparent.addEventListener('click', function(event){
+            console.log(event.target.id);//this will log the id of the element that was clicked
+            console.log('Grandparent clicked');
+        });//this is the grandparent element
+        
+
+        const parent = document.getElementById('parent');
+        parent.addEventListener('click', function(event){
+            console.log('Parent clicked');
+            event.stopPropagation();//this will stop the event from bubbling up to the grandparent
+        });
+        const child = document.getElementById('child');
+        child.addEventListener('click', function(event){
+            console.log('Child clicked');
+            event.stopPropagation();//this will stop the event from bubbling up to the parent and grandparent
+        });//this is event bubbling where the event starts from the child element and bubbles up to the parent and grandparent elements
+            
+
+    </script>
+</body>
+</html>
