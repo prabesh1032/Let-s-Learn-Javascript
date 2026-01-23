@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black; color: turquoise; text-align: center;">
+    <div id="parent">
+        <h1>
+            Love Calculator Application
+        </h1>
+        <form action="">
+            <label for="boyName">Boy's Name:</label>
+            <input type="text" id="boyName" name="boyName">
+            <br><br>
+            <label for="girlName">Girl's Name:</label>
+            <input type="text" id="girlName" name="girlName">
+            <br><br>
+            <button type="submit">Calculate Love %</button>
+        </form>
+        <br><br>
+        <h2>Result:</h2>
+        <button id="resetButton">reset</button>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(event){
+            event.preventDefault();//to prevent the form from submitting and refreshing the page
+            const boyName = document.getElementById('boyName');
+            const girlName = document.getElementById('girlName');
+            const length1 = boyName.value.length;
+            const length2 = girlName.value.length;
+            const Result =Math.pow((length1 + length2),2) % 101;
+            document.querySelector('h2').textContent = `Result: ${Result}% Love`;
+            const resetButton = document.getElementById('resetButton');
+            resetButton.addEventListener('click', function(){
+                boyName.value = '';
+                girlName.value = '';
+                document.querySelector('h2').textContent = 'Result:';
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
