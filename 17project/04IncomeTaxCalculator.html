@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: gray; color: blue; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div id="parent">
+        <h1>Income Tax Calculator</h1>
+        <form action="">
+            <label for="income">Enter your Income:</label>
+            <input type="number" id="income" name="income" required>
+            <br><br>
+            <button type="submit">Calculate Tax</button>
+        </form>
+        <br><br>
+        <h2>Total Tax:</h2>
+        <button id="resetButton">Reset</button>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(event){
+            event.preventDefault();
+            const income = document.getElementById('income');
+            const amount=parseInt(income.value);
+            let totalTax=0;
+            if(amount<=1200000){
+                totalTax=0;
+            }else if(amount<=1600000)
+            {
+                totalTax= (amount - 1200000) * 0.15;
+            }else if(amount<=2000000){
+                totalTax= (amount - 1600000) * 0.20 + 60000;
+            }else if(amount<=2400000){
+                totalTax= (amount - 2000000) * 0.25 + 60000+ 80000;
+            }else{
+                totalTax= (amount - 2400000) * 0.30 + 60000 + 80000 + 100000 ;
+            } 
+            const result = document.querySelector('h2');  
+            result.textContent = `Total Tax: ₹${totalTax}`;
+            result.style.color = 'yellow';
+            const resetButton = document.getElementById('resetButton');
+            resetButton.addEventListener('click', function(){
+                income.value = '';
+                result.textContent = 'Total Tax:';
+            });
+
+        });
+
+    </script>
+    
+</body>
+</html>
