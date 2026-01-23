@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Insight Form</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px 35px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2a5298;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2a5298;
+        }
+
+        .dob {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dob input,
+        .dob select {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Get Your Insight</h2>
+
+        <form id="astroform">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                <input type="text" id="surname" placeholder="Enter your surname" required>
+            </div>
+
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <div class="dob">
+                    <input type="number" placeholder="Day" min="1" max="31" required>
+
+                    <select required>
+                        <option value="">Month</option>
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
+
+                    <input type="number" placeholder="Year" min="1900" max="2100" required>
+                </div>
+            </div>
+
+            <button type="submit">Get Insight</button>
+        </form>
+        <div id="result" class="result"></div>
+        <button id="resetButton">Reset</button>
+    </div>
+
+    <script>
+        const zodiacSigns = [
+            "Aries (Mesh)",
+            "Taurus (Vrishabha)",
+            "Gemini (Mithuna)",
+            "Cancer (Karka)",
+            "Leo (Simha)",
+            "Virgo (Kanya)",
+            "Libra (Tula)",
+            "Scorpio (Vrishchika)",
+            "Sagittarius (Dhanu)",
+            "Capricorn (Makara)",
+            "Aquarius (Kumbha)",
+            "Pisces (Meena)"
+        ];
+        const compliments = [
+            "You have a natural leadership aura.",
+            "Your confidence inspires others.",
+            "You are emotionally wise beyond your years.",
+            "Your dedication brings long-term success.",
+            "You possess a rare balance of logic and emotion.",
+            "Your creativity flows effortlessly.",
+            "You handle pressure with grace.",
+            "Your honesty builds strong connections.",
+            "You radiate positive energy.",
+            "Your patience makes you dependable.",
+            "You have a strong moral compass.",
+            "Your determination is admirable.",
+            "You uplift people just by being present.",
+            "Your intuition is remarkably accurate.",
+            "You adapt easily to change.",
+            "You value loyalty deeply.",
+            "Your kindness leaves lasting impressions.",
+            "You think before you act.",
+            "You learn quickly from experience.",
+            "Your calm nature resolves conflicts.",
+            "You are spiritually aware.",
+            "Your consistency brings stability.",
+            "You see opportunities where others don’t.",
+            "You respect boundaries—yours and others’.",
+            "You are mentally resilient.",
+            "Your ambition is well-directed.",
+            "You remain humble even in success.",
+            "You have strong inner discipline.",
+            "You inspire trust naturally.",
+            "You grow stronger with time."
+        ];
+        const victimCardCompliments = [
+            "You often give more than you receive.",
+            "You carry emotional weight quietly.",
+            "Your struggles have refined your strength.",
+            "You stay kind even when hurt.",
+            "You try to protect others from pain.",
+            "You feel deeply and sincerely.",
+            "You rarely complain despite challenges.",
+            "You sacrifice comfort for loved ones.",
+            "You remain patient during unfair situations.",
+            "You heal others while healing yourself.",
+            "You tolerate more than most people could.",
+            "You often put others first.",
+            "You are misunderstood, yet resilient.",
+            "You choose peace over conflict.",
+            "You forgive even when it’s difficult.",
+            "You stay composed under emotional stress.",
+            "You don’t show your pain easily.",
+            "You endure emotional cycles bravely.",
+            "You value harmony over ego.",
+            "You continue despite emotional fatigue.",
+            "You remain hopeful after disappointments.",
+            "You feel responsibility deeply.",
+            "You carry silent expectations.",
+            "You absorb emotions around you.",
+            "You remain loyal even when hurt.",
+            "You don’t abandon people easily.",
+            "You struggle quietly, not loudly.",
+            "You internalize emotions thoughtfully.",
+            "You protect others from your pain.",
+            "You keep going, even when tired."
+        ];
+        const recommendations = [
+            "Trust your intuition today.",
+            "Slow down before making decisions.",
+            "Focus on long-term stability.",
+            "Avoid unnecessary emotional reactions.",
+            "Prioritize rest and clarity.",
+            "Protect your energy.",
+            "Choose consistency over speed.",
+            "Let go of emotional clutter.",
+            "Be patient with outcomes.",
+            "Re-evaluate your priorities.",
+            "Listen more than you speak today.",
+            "Avoid overthinking small matters.",
+            "Stay grounded in reality.",
+            "Balance emotions with logic.",
+            "Take small but steady steps.",
+            "Don’t rush important conversations.",
+            "Focus on what you can control.",
+            "Practice emotional boundaries.",
+            "Reflect before responding.",
+            "Seek clarity before commitment.",
+            "Avoid impulsive decisions.",
+            "Stay open to guidance.",
+            "Trust timing, not pressure.",
+            "Choose peace over arguments.",
+            "Nurture your inner self.",
+            "Observe patterns around you.",
+            "Act with awareness.",
+            "Stay flexible with plans.",
+            "Avoid unnecessary risks today.",
+            "End what no longer serves you."
+        ];
+        const predictions = [
+            "Today brings emotional clarity.",
+            "A delayed opportunity will resurface.",
+            "Your patience will soon be rewarded.",
+            "Financial stability improves gradually.",
+            "A conversation may change your perspective.",
+            "Trust your instincts—they are accurate now.",
+            "Avoid reacting emotionally today.",
+            "Someone from the past may reconnect.",
+            "Progress comes through discipline.",
+            "Your efforts are being noticed.",
+            "Unexpected support may appear.",
+            "Inner balance brings outer success.",
+            "You may feel reflective today.",
+            "Energy levels improve by evening.",
+            "A decision becomes clearer soon.",
+            "Minor obstacles test patience.",
+            "Positive news arrives soon.",
+            "Focus improves throughout the day.",
+            "Emotional healing is underway.",
+            "Creative ideas flow freely.",
+            "Financial planning benefits you.",
+            "Communication becomes smoother.",
+            "A sense of closure appears.",
+            "Stability replaces uncertainty.",
+            "A long-term plan gains clarity.",
+            "Your intuition strengthens.",
+            "New responsibilities emerge.",
+            "Emotional maturity brings peace.",
+            "Hard work shows results.",
+            "Balance returns naturally."
+        ];
+
+        const dataForm = document.getElementById('astroform');
+        dataForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const surname = document.getElementById('surname').value.trim();
+            const day = parseInt(document.querySelector('.dob input[type="number"]').value);
+            const month = document.querySelector('.dob select').selectedIndex;
+            const year = parseInt(document.querySelectorAll('.dob input[type="number"]')[1].value);
+            if (!name || !surname || isNaN(day) || isNaN(month) || isNaN(year)) {
+                alert('Please fill in all fields correctly.');
+                return;
+            }
+           const text = `Hello ${name} ${surname}, born on ${day}/${month + 1}/${year}. Your zodiac sign is ${zodiacSigns[month-1]}.
+           ${compliments[day-1]} and ${victimCardCompliments[year%30]}.
+           Today's recommendation: ${recommendations[(day*month)%30]}.
+           Prediction: ${predictions[(name.length*month)%30]}.`;
+            document.getElementById('result').textContent = text;
+        });
+        document.getElementById('resetButton').addEventListener('click', function () {
+            document.getElementById('astroform').reset();
+            document.getElementById('result').textContent = '';
+        });
+    </script>
+
+</body>
+
+</html>
