@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body
+    style="background-color: cyan; color: blue; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div id="parent">
+        <h1>Olympic Countdown Timer</h1>
+        <div style="margin-top: 20px;" id="result">
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            const result = document.getElementById('result');
+        const currentdate = new Date();
+        const olympicDate = new Date('2028,06,14').getTime();
+        let timedifference = olympicDate - currentdate;//milliseconds
+        const days= Math.floor(timedifference / (1000 * 60 * 60 * 24));
+        timedifference = timedifference % (1000 * 60 * 60 * 24);
+        const hours = Math.floor(timedifference / (1000 * 60 * 60));
+        timedifference = timedifference % (1000 * 60 * 60);
+        const minutes = Math.floor(timedifference / (1000 * 60));
+        timedifference = timedifference % (1000 * 60);
+        const seconds = Math.floor(timedifference / (1000));
+        result.textContent = `Time left for 2028 Olympic Games: ${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`;
+        }, 1000);
+        
+    </script>
+</body>
+
+</html>
