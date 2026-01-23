@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+
+<body style="background-color: black; color: white; text-align: center;">
+
+    <h1>TO DO LIST</h1>
+
+    <form>
+        <input 
+            type="text" 
+            id="task" 
+            placeholder="Enter your task here" 
+            style="width: 300px; height: 30px; font-size: 16px;"
+        >
+        <button 
+            type="submit" 
+            style="height: 36px; font-size: 16px; cursor: pointer;"
+        >
+            Add Task
+        </button>
+        <br><br>
+    </form>
+
+    <div id="alltasks"></div>
+
+    <script>
+        const form = document.querySelector('form');
+        const resultDiv = document.getElementById('alltasks');
+        const inputTask = document.getElementById('task');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const taskText = inputTask.value.trim();
+            if (taskText === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            const parentDiv = document.createElement('div');
+            parentDiv.style.marginBottom = "10px";
+
+            const taskSpan = document.createElement('span');
+            taskSpan.textContent = taskText;
+            taskSpan.style.marginRight = '15px';
+
+            const doneButton = document.createElement('button');
+            doneButton.textContent = 'Done';
+            doneButton.style.marginRight = '10px';
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+
+            parentDiv.append(taskSpan, doneButton, deleteButton);
+            resultDiv.append(parentDiv);
+
+            doneButton.addEventListener('click', function () {
+                taskSpan.style.textDecoration =
+                    taskSpan.style.textDecoration === 'line-through'
+                        ? 'none'
+                        : 'line-through';
+            });
+
+            deleteButton.addEventListener('click', function () {
+                parentDiv.remove();
+            });
+
+            inputTask.value = "";
+        });
+    </script>
+
+</body>
+</html>
