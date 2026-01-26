@@ -1,0 +1,75 @@
+<!-- callbackhell -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: lightgreen;">
+    <div style="text-align: center;  margin-top: 50px;">
+        <h1>
+            Callbackhell
+        </h1>
+    </div>
+    
+    <script>
+
+          const orderDetails = {
+        orderId: 12345,
+        orderItems: ['Pizza', 'Pasta', 'Salad'],
+        totalAmount: 29.99,
+        customerName: 'John Doe',
+        customerLocation: 'Nepal'
+    };
+
+        function placeOrder(orderDetails, callback){
+
+            console.log("Order Placed by " + orderDetails.customerName + ". Getting the order details...");
+            setTimeout(function(){
+                console.log("Order details received. Preparing the order...of totle amount $" + orderDetails.totalAmount);
+                callback(orderDetails);
+            },3000);
+        }
+
+            function prepareOrder(orderDetails, callback){
+                console.log("Order is being prepared. Please wait..."+orderDetails.customerName );
+                setTimeout(function(){
+                    console.log("Order prepared. Getting the payment details...");
+                    callback(orderDetails);
+                },3000);
+            }
+        //placeOrder();
+        //prepareOrder();//this will cause event loop blocking because prepareOrder function is called before placeOrder function
+
+        //placeOrder(prepareOrder)//here we use callback to avoid event loop blocking
+
+        function pickUpOrder(orderDetails, callback){
+            console.log("Order is ready for pickup at " + orderDetails.customerLocation + ". Please collect your order.");
+            setTimeout(function(){
+                console.log("Order picked up. Enjoy your meal!");
+                callback(orderDetails);
+            },3000);
+        }   
+
+        function completeOrder(orderDetails){
+            console.log("Order(" + orderDetails.orderId + ") is complete. Thank you " + orderDetails.customerName + " for dining with us!");
+            setTimeout(function(){
+                console.log("We hope to see you again soon!");
+            },3000);
+        }
+
+        //for 4 function callback we can do like this
+        placeOrder(orderDetails,()=> {
+                prepareOrder(orderDetails,()=>{
+                    pickUpOrder(orderDetails,()=>{
+                        completeOrder(orderDetails);
+                    });
+                });
+        });
+        //this is callback hell because of multiple nested callbacks making the code hard to read and maintain
+        //it is so difficult to debug and error handling is also complex in this structure
+        //to avoid callback hell we can use promises and async/await in JavaScript
+    </script>
+</body>
+</html>
