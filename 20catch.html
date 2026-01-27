@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: lightyellow;">
+    <div>
+        <h1>Try...Catch in JavaScript</h1>
+        <div id="first"></div>
+    </div>
+    
+
+    <script>
+        fetch('https://api.github.com/users')
+        .then((response) => {
+            console.log(response);
+        if(!response.ok){
+            throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+        })
+        .then((data) => {
+            console.log("Data fetched successfully (short form):");
+            //console.log(data);
+            const firstDiv = document.getElementById('first');
+            for(let i= 0; i < data.length; i++) {
+                const image = document.createElement('img');
+                image.src = data[i].avatar_url;
+                image.style.width = '100px';
+                image.style.margin = '10px';
+                firstDiv.append(image);
+            }
+        })
+        .catch((error) => {
+            const parentDiv = document.getElementById('first');
+            parentDiv.textContent = error.message;
+                });
+
+    </script>
+</body>
+</html>
