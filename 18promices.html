@@ -21,6 +21,7 @@
         //first stage is pending when the promise is created but not yet resolved or rejected
         //second stage is fulfilled when the promise is resolved successfully
         //third stage is rejected when the promise is failed to resolve
+        //also promices is only in rejected when there is a network error or the request is blocked otherwise it will be fulfilled even if the response status is 404 or 500
         //also we can only read the variable once the promise is fulfilled or rejected
 
         const p2 = p1.then((response)=>{
@@ -61,6 +62,21 @@
         
         
 
+        //create a promise using the Promise constructor
+        const myPromise = new Promise((resolve, reject) => {
+            const success = false; //change this to true to see the resolve case
+            if(success){
+                resolve("Promise resolved successfully!");
+            } else {
+                reject("Promise rejected!");
+            }
+            myPromise.then((message) => {
+                console.log(message);
+            }).catch((error) => {
+                console.log(error);
+            });
+
+        });
 
         
     </script>

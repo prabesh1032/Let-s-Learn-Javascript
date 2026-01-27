@@ -1,0 +1,57 @@
+<!-- json object in javascript-->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body style="background-color: lightcoral;">
+    <div>
+        <h1>JSON Object in JavaScript</h1>
+    </div>
+
+    <script>
+         //json object is a data format that is used to store and exchange data
+        //json stands for JavaScript Object Notation
+        //json object is understood by most programming languages and is widely used in web development
+        //difference between json object and javascript object
+        //1. json object keys must be in double quotes while javascript object keys can be in single or double quotes
+        //2. json object values must be in double quotes if they are strings while javascript object values can be in single or double quotes if they are strings
+        //example of json object and javascript object
+        //javascript object
+        const jsObject = {
+            name: 'John Doe',
+            age: 30,
+            isStudent: false,
+            courses: ['Math', 'Science', 'History'],
+            address: {
+                street: '123 Main St',
+                city: 'Anytown',
+                state: 'CA'
+            },
+            c:undefined
+        };
+        const jsonObject = `{
+            "name": "John Doe",
+            "age": 30,
+            "isStudent": false,
+            "courses": ["Math", "Science", "History"],
+            "address": {
+                "street": "123 Main St",
+                "city": "Anytown",
+                "state": "CA"
+            }
+        };`
+        console.log(jsonObject);
+        console.log(jsObject);
+        //we can directly covert javascript object to json object using JSON.stringify() method
+        const jsonString = JSON.stringify(jsObject);
+        console.log(jsonString);//it will convert javascript object to json string BUT ONLY the properties with valid json values will be converted, properties with undefined or function values will be omitted
+        //similary we can convert json string to javascript object using JSON.parse() method
+        const parsedObject = JSON.parse(jsonString);
+        console.log(parsedObject);
+    </script>
+    
+ </body>
+ </html>
