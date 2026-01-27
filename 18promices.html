@@ -24,7 +24,7 @@
         //also promices is only in rejected when there is a network error or the request is blocked otherwise it will be fulfilled even if the response status is 404 or 500
         //also we can only read the variable once the promise is fulfilled or rejected
 
-        const p2 = p1.then((response)=>{
+        const p2 = p1.then((response)=>{//we use .then() method to read the promise once it is fulfilled
             //console.log(response); //here we get the response object but in byte format
             //to convert the response object to json format we use response.json() method
             return response.json(); 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Users</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #first {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 80%;
+            margin: auto;
+        }
+
+        .user {
+            width: 150px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .user img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 1s ease;
+        }
+        .user img:hover {
+            transform: scale(1.1);
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="background-color: lime;">
+    <h1 style="text-align: center; margin: 20px;">Meet Our GitHub Team</h1>
+    <div id="first"></div>
+
+    <script>
+        const firstDiv = document.getElementById('first');
+
+        async function fetchGitHubUsers() {
+            try {
+                const response = await fetch('https://api.github.com/users');
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch users");
+                }
+
+                const data = await response.json();
+
+                for (const user of data) {
+                    const element = document.createElement('div');
+                    element.className = 'user';
+
+                    const image = document.createElement('img');
+                    image.src = user.avatar_url;
+
+                    const username = document.createElement('h2');
+                    username.textContent = user.login;
+
+                    const link = document.createElement('a');
+                    link.href = user.html_url;
+                    link.target = "_blank";
+                    link.textContent = "View Profile";
+
+                    element.append(image, username, link);
+                    firstDiv.appendChild(element);
+                    //difference between append and appendChild is that append can take multiple arguments while appendChild can take only one argument
+                }
+            } catch (error) {
+                firstDiv.textContent = "Error loading GitHub users.";
+                console.error(error);
+            }
+        }
+
+        fetchGitHubUsers();
+    </script>
+</body>
+</html>
